@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/shathasmadi/cityexplorer-server#readme",
   "dependencies": {
+    "axios": "^0.21.1",
     "cors": "^2.8.5",
     "cros": "^1.0.1",
     "dotenv": "^10.0.0",
