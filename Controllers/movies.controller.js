@@ -7,7 +7,7 @@ const movieController = (req, res) => {
   let inputUser = req.query.query;
   let movieKey = process.env.MOVIE_API_KEY;
   let url = `https://api.themoviedb.org/3/search/movie?api_key=${movieKey}&query=${inputUser}`;
-  if (movieInfo[inputUser] !== undefined) {
+  if (movieInfo[inputUser] !== undefined && (Date.now() - movieInfo[inputUser].time < 86400000)) {
     console.log('get from Memory');
     res.send(movieInfo[inputUser]);
   } else {
@@ -16,6 +16,8 @@ const movieController = (req, res) => {
         return new Movie(item);
       });
       movieInfo[inputUser] = movieArray;
+      movieInfo[inputUser].time = Date.now();
+      console.log('api');
       res.send(movieArray);
     })
     .catch ((error) => {
