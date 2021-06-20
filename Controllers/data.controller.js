@@ -8,17 +8,17 @@ const weatherData = {};
 const dataController = (req, res) => { // callback function of what we should do with our request
     let lat = req.query.lat;
     let lon = req.query.lon;
-    let weatherKey = lat + lon;
+    let weatherKeyy = lat + lon;
    
         if (lat && lon) {
-             if (weatherData[weatherKey] !== undefined && (Date.now() - weatherData[weatherKey].time < 86400000)) {
+             if (weatherData[weatherKeyy] !== undefined && (Date.now() - weatherData[weatherKeyy].time < 86400000)) {
         console.log('get from Memory');
         res.send(weatherData[weatherKey]);
     } else {
             axios.get(`${weatherSite}?key=${weatherKey}&lat=${lat}&lon=${lon}`).then(response => {
                 const responseData = response.data.data.map(obj => new Weather(obj));
-                weatherData[weatherKey] = responseData;
-                weatherData[weatherKey].time = Date.now();
+                weatherData[weatherKeyy] = responseData;
+                weatherData[weatherKeyy].time = Date.now();
                 res.json(responseData)
             }).catch(error => { res.send(error.message) });
             // res.json(data) // our endpoint function response
